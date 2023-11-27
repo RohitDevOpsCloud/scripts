@@ -1,0 +1,20 @@
+pipeline{
+    agent any
+
+
+    stages {
+        stage('Deploy to EKS') {
+            steps{
+                script{
+                    // Authenticate with EKS
+                    withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k8s', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+                        // Apply Kubernetes manifests
+                        sh "kubectl apply -f /home/zec/Documents/Devopslearning/jenkinsscript/namespace.yml"
+                        sh "kubectl apply -f /home/zec/Documents/Devopslearning/jenkinsscript/nginx.yml"
+                    }
+                }
+            }
+        }
+    }
+
+}
